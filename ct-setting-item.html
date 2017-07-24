@@ -1,0 +1,34 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<!--
+`ct-setting-item`
+Component for a setting item
+
+@demo demo/index.html
+-->
+
+<dom-module id="ct-setting-item">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Hello [[prop1]]!</h2>
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'ct-setting-item',
+
+      properties: {
+        prop1: {
+          type: String,
+          value: 'ct-setting-item',
+        },
+      },
+
+    });
+  </script>
+</dom-module>
