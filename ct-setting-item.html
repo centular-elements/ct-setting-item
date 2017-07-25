@@ -1,4 +1,15 @@
 <link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-button/paper-button.html">
+<link rel="import" href="../paper-input/paper-input.html">
+<link rel="import" href="../paper-input/paper-input-behavior.html">
+
+<link rel="import" href="../iron-form/iron-form.html">
+<link rel="import" href="../iron-icon/iron-icon.html">
+
+<link rel="import" href="../ct-currency-behaviour/ct-currency-behaviour.html">
+<link rel="import" href="../shared-styles/ct-application-theme.html">
+
+<link rel="import" href="../ct-setting-api/ct-setting-api.html">
 
 <!--
 `ct-setting-item`
@@ -9,12 +20,77 @@ Component for a setting item
 
 <dom-module id="ct-setting-item">
   <template>
-    <style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <style is="global-styles">
       :host {
         display: block;
+        --paper-input-container:{
+          padding: 0 !important;
+        };
+        paper-input-container:{
+          padding: 0 !important;
+        };
+      }
+      .vertical-middle {
+        vertical-align: middle;
+        display: table-cell;
+      }
+      .vertical-middle-container {
+        height: 62px;
+        display: table;
+        float: none;
+        table-layout: fixed;
+      }
+
+      .row-striped:nth-of-type(odd){
+        background-color: #efefef;
+      }
+
+      .row-striped:nth-of-type(even){
+        background-color: #ffffff;
+      }
+      .fees-container .row {
+        /*display: flex;*/
+        align-items: center;
+      }
+
+      paper-input {
+        margin-top: -14px !important;
+        padding: 0px 0 10px 0 !important;
+      }
+
+      paper-input-container.input-element {
+
       }
     </style>
-    <h2>Hello [[prop1]]!</h2>
+    <div class="row">
+
+
+    <div class="col-xs-6">
+
+
+    <paper-input
+      disabled="[[!_isStateEdit]]"
+      class="input-element"
+      id="input"
+      type="text"
+      name='value'
+      required
+      error-message="Please enter a value"
+      no-label
+      value="[[value]]"
+      >
+    </paper-input>
+    </div>
+    <div class="col-xs-6">
+     <paper-button
+             class$="btn [[_computeBtnStyle(_isStateEdit)]]"
+             on-tap="_editBtnHandler"
+             raised>
+       [[_computeButtonText(_isStateEdit)]]
+     </paper-button>
+       </div>
+     </div>
   </template>
 
   <script>
@@ -23,10 +99,42 @@ Component for a setting item
       is: 'ct-setting-item',
 
       properties: {
-        prop1: {
-          type: String,
-          value: 'ct-setting-item',
+        category: String,
+        key: String,
+        value: String,
+        _isStateEdit : {
+            type: Boolean,
+            value: function() {
+                return false;
+            }
         },
+      },
+
+      _computeButtonText: function(isEdit){
+          return (isEdit) ? 'Save' : 'Edit';
+      },
+
+      _computeBtnStyle : function(isEdit){
+          return (isEdit) ? "btn-primary" : "btn-default";
+      },
+      _toggleStatus : function(){
+         this._isStateEdit = !this._isStateEdit;
+     },
+
+      _editBtnHandler : function(e){
+          var input = this.$$('#input');
+          var value = input.value;
+          var key = this.key;
+          var category = this.category;
+          // switcher.editMode = !switcher.editMode;
+          if(this._isStateEdit) {
+            this.value = value;
+            this.fire('edit', {"key" : this.key, "value": this.value, "category": this.category});
+            this._toggleStatus();
+          }
+          else {
+            this._toggleStatus();
+          }
       },
 
     });
