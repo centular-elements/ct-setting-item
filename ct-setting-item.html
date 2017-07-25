@@ -31,66 +31,35 @@ Component for a setting item
           padding: 0 !important;
         };
       }
-      .vertical-middle {
-        vertical-align: middle;
-        display: table-cell;
-      }
-      .vertical-middle-container {
-        height: 62px;
-        display: table;
-        float: none;
-        table-layout: fixed;
-      }
-
-      .row-striped:nth-of-type(odd){
-        background-color: #efefef;
-      }
-
-      .row-striped:nth-of-type(even){
-        background-color: #ffffff;
-      }
-      .fees-container .row {
-        /*display: flex;*/
-        align-items: center;
-      }
-
       paper-input {
         margin-top: -14px !important;
         padding: 0px 0 10px 0 !important;
       }
-
-      paper-input-container.input-element {
-
-      }
     </style>
     <div class="row">
-
-
-    <div class="col-xs-6">
-
-
-    <paper-input
-      disabled="[[!_isStateEdit]]"
-      class="input-element"
-      id="input"
-      type="text"
-      name='value'
-      required
-      error-message="Please enter a value"
-      no-label
-      value="[[value]]"
-      >
-    </paper-input>
-    </div>
-    <div class="col-xs-6">
-     <paper-button
-             class$="btn [[_computeBtnStyle(_isStateEdit)]]"
-             on-tap="_editBtnHandler"
-             raised>
-       [[_computeButtonText(_isStateEdit)]]
-     </paper-button>
-       </div>
+      <div class="col-xs-6">
+        <paper-input
+          disabled="[[!_isStateEdit]]"
+          class="input-element"
+          id="input"
+          type="text"
+          name='value'
+          required
+          error-message="Please enter a value"
+          no-label
+          value="[[value]]"
+          >
+        </paper-input>
+      </div>
+      <div class="col-xs-6">
+       <paper-button
+               class$="btn [[_computeBtnStyle(_isStateEdit)]]"
+               on-tap="_editBtnHandler"
+               raised>
+         [[_computeButtonText(_isStateEdit)]]
+       </paper-button>
      </div>
+   </div>
   </template>
 
   <script>
@@ -102,6 +71,7 @@ Component for a setting item
         category: String,
         key: String,
         value: String,
+
         _isStateEdit : {
             type: Boolean,
             value: function() {
@@ -126,7 +96,7 @@ Component for a setting item
           var value = input.value;
           var key = this.key;
           var category = this.category;
-          // switcher.editMode = !switcher.editMode;
+
           if(this._isStateEdit) {
             this.value = value;
             this.fire('edit', {"key" : this.key, "value": this.value, "category": this.category});
