@@ -99,7 +99,7 @@ Component for a setting item
 
           if(this._isStateEdit) {
             this.value = value;
-            this.fire('edit', {"key" : this.key, "value": this.value, "category": this.category});
+            this.fire('ct-save-setting-item-tapped', {"key" : this.key, "value": this.value, "category": this.category});
             this._toggleStatus();
           }
           else {
